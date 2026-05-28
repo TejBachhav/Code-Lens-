@@ -1,0 +1,42 @@
+/**
+ * CodeLens Generated Tests — Jest
+ * Generated: {{generatedAt}}
+ *
+ * Install dependencies:
+ *   npm install --save-dev jest supertest @types/jest @types/supertest ts-jest
+ *
+ * Run with:
+ *   npx jest
+ */
+
+import request from 'supertest';
+
+const BASE_URL = process.env.API_BASE_URL ?? '{{baseUrl}}';
+
+{{#each testGroups}}
+// ─── {{groupName}} ────────────────────────────────────────────────────────────
+
+describe('{{groupName}}', () => {
+{{#each testCases}}
+  test('{{description}}', async () => {
+    const response = await request(BASE_URL)
+      .{{methodLower}}('{{path}}')
+      {{#if headers}}
+      {{#each headers}}
+      .set('{{@key}}', '{{this}}')
+      {{/each}}
+      {{/if}}
+      {{#if body}}
+      .send({{bodyJson}})
+      {{/if}};
+
+    expect(response.status).toBe({{expectedStatus}});
+    {{#each assertions}}
+    {{this}}
+    {{/each}}
+  });
+
+{{/each}}
+});
+
+{{/each}}

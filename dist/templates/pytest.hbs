@@ -1,0 +1,62 @@
+"""
+CodeLens Generated Tests — pytest
+Generated: {{generatedAt}}
+
+Requirements:
+    pip install pytest httpx pytest-asyncio
+
+Run with:
+    pytest tests/ -v
+"""
+
+import pytest
+import httpx
+
+BASE_URL = "{{baseUrl}}"
+
+{{#each testGroups}}
+# ─── {{groupName}} ────────────────────────────────────────────────────────────
+
+class Test{{className}}:
+{{#each testCases}}
+    def test_{{safeName}}(self):
+        """{{description}}"""
+        {{#if headers}}
+        headers = {
+        {{#each headers}}
+            "{{@key}}": "{{this}}",
+        {{/each}}
+        }
+        {{else}}
+        headers = {}
+        {{/if}}
+
+        response = httpx.{{methodLower}}(
+            f"{BASE_URL}{{path}}",
+            headers=headers,
+            {{#if body}}
+            json={{bodyJson}},
+            {{/if}}
+            follow_redirects=True,
+        )
+
+        assert response.status_code == {{expectedStatus}}, (
+            f"Expected {{expectedStatus}}, got {response.status_code}: {response.text}"
+        )
+        {{#each assertions}}
+        {{this}}
+        {{/each}}
+
+{{/each}}
+{{/each}}
+
+
+# ─── Conftest / Fixtures ──────────────────────────────────────────────────────
+
+@pytest.fixture(scope="session")
+def base_url():
+    return BASE_URL
+
+@pytest.fixture
+def client():
+    return httpx.Client(base_url=BASE_URL, follow_redirects=True)

@@ -1,0 +1,250 @@
+{
+  "name": "codelens-api-docs",
+  "displayName": "CodeLens — API Documentation Generator",
+  "description": "Offline-first VS Code extension that scans your codebase and generates API documentation, architecture docs, and runnable test suites using local LLM inference.",
+  "version": "0.1.0",
+  "publisher": "codelens",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Testing",
+    "Other"
+  ],
+  "keywords": [
+    "api",
+    "documentation",
+    "openapi",
+    "swagger",
+    "testing",
+    "offline",
+    "llm"
+  ],
+  "activationEvents": [
+    "onCommand:codelens.scanWorkspace",
+    "workspaceContains:**/*.py",
+    "workspaceContains:**/*.ts",
+    "workspaceContains:**/*.js",
+    "workspaceContains:**/*.xml"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codelens.scanWorkspace",
+        "title": "CodeLens: Scan Workspace",
+        "icon": "$(search)"
+      },
+      {
+        "command": "codelens.generateDocs",
+        "title": "CodeLens: Generate Documentation",
+        "icon": "$(book)"
+      },
+      {
+        "command": "codelens.generateTests",
+        "title": "CodeLens: Generate Tests",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "codelens.showEndpoints",
+        "title": "CodeLens: Show Endpoints",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "codelens.previewDoc",
+        "title": "CodeLens: Preview Documentation",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "codelens.refreshEndpoints",
+        "title": "CodeLens: Refresh Endpoints",
+        "icon": "$(refresh)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codelens-explorer",
+          "title": "CodeLens",
+          "icon": "$(symbol-interface)"
+        }
+      ]
+    },
+    "views": {
+      "codelens-explorer": [
+        {
+          "id": "codelens.endpointTree",
+          "name": "API Endpoints",
+          "contextualTitle": "CodeLens Endpoints"
+        },
+        {
+          "type": "webview",
+          "id": "codelens.pipelineStatus",
+          "name": "Pipeline Status",
+          "contextualTitle": "CodeLens Pipeline"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "codelens.scanWorkspace",
+          "when": "view == codelens.endpointTree",
+          "group": "navigation"
+        },
+        {
+          "command": "codelens.refreshEndpoints",
+          "when": "view == codelens.endpointTree",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "codelens.scanWorkspace",
+        "key": "ctrl+shift+l s",
+        "mac": "cmd+shift+l s"
+      },
+      {
+        "command": "codelens.generateDocs",
+        "key": "ctrl+shift+l d",
+        "mac": "cmd+shift+l d"
+      },
+      {
+        "command": "codelens.generateTests",
+        "key": "ctrl+shift+l t",
+        "mac": "cmd+shift+l t"
+      },
+      {
+        "command": "codelens.showEndpoints",
+        "key": "ctrl+shift+l e",
+        "mac": "cmd+shift+l e"
+      }
+    ],
+    "configuration": {
+      "title": "CodeLens",
+      "properties": {
+        "codelens.ollama.url": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "URL of the Ollama server for local LLM inference."
+        },
+        "codelens.ollama.model": {
+          "type": "string",
+          "default": "qwen2.5-coder:7b",
+          "description": "Ollama model to use for Tier 3 enrichment.",
+          "enum": [
+            "qwen2.5-coder:7b",
+            "qwen2.5-coder:1.5b",
+            "qwen2.5-coder:3b",
+            "deepseek-coder:6.7b",
+            "deepseek-coder-v2:16b",
+            "codellama:7b",
+            "mistral:7b"
+          ]
+        },
+        "codelens.output.directory": {
+          "type": "string",
+          "default": ".codelens",
+          "description": "Output directory name (relative to workspace root)."
+        },
+        "codelens.scan.excludePatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/node_modules/**",
+            "**/.venv/**",
+            "**/venv/**",
+            "**/__pycache__/**",
+            "**/dist/**",
+            "**/build/**",
+            "**/.git/**",
+            "**/target/**"
+          ],
+          "description": "Glob patterns to exclude from scanning."
+        },
+        "codelens.tier3.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable LLM enrichment via Ollama (Tier 3). Disable for faster, deterministic-only output."
+        },
+        "codelens.tier3.concurrency": {
+          "type": "number",
+          "default": 2,
+          "minimum": 1,
+          "maximum": 8,
+          "description": "Maximum concurrent Ollama requests."
+        },
+        "codelens.tier3.temperature": {
+          "type": "number",
+          "default": 0.1,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "LLM temperature (lower = more deterministic)."
+        },
+        "codelens.scan.languages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "python",
+              "typescript",
+              "javascript",
+              "xml",
+              "java",
+              "go"
+            ]
+          },
+          "default": [
+            "python",
+            "typescript",
+            "javascript",
+            "xml"
+          ],
+          "description": "Languages to include in scanning."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "mocha --require ts-node/register src/test/**/*.test.ts",
+    "test:integration": "node ./dist/test/runTest.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0",
+    "copy-webpack-plugin": "^14.0.0",
+    "eslint": "^8.56.0",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.2",
+    "fast-xml-parser": "^4.3.4",
+    "handlebars": "^4.7.8",
+    "js-yaml": "^4.1.0",
+    "tree-sitter-wasms": "^0.1.13",
+    "ts-morph": "^22.0.0",
+    "web-tree-sitter": "^0.22.2"
+  }
+}

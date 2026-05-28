@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+  <servlet>
+    <servlet-name>api</servlet-name>
+    <servlet-class>com.example.ApiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>api</servlet-name>
+    <url-pattern>/api/*</url-pattern>
+  </servlet-mapping>
+</web-app>

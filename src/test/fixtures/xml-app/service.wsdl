@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="UserService" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <portType name="UserPortType">
+    <operation name="getUser">
+      <input message="tns:GetUserRequest"/>
+      <output message="tns:GetUserResponse"/>
+    </operation>
+    <operation name="createUser">
+      <input message="tns:CreateUserRequest"/>
+      <output message="tns:CreateUserResponse"/>
+    </operation>
+  </portType>
+</definitions>

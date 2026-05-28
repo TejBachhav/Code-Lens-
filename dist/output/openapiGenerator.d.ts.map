@@ -1,0 +1,1 @@
+{"version":3,"file":"openapiGenerator.d.ts","sourceRoot":"","sources":["../../src/output/openapiGenerator.ts"],"names":[],"mappings":"AAAA;;;;;;;;;;;;GAYG;AAKH,OAAO,EACL,cAAc,EAIf,MAAM,iBAAiB,CAAC;AAczB;;;;;GAKG;AACH,wBAAgB,mBAAmB,CAAC,SAAS,EAAE,cAAc,EAAE,GAAG,MAAM,CAoEvE;AAED;;;;;GAKG;AACH,wBAAsB,gBAAgB,CACpC,IAAI,EAAE,MAAM,EACZ,UAAU,EAAE,MAAM,GACjB,OAAO,CAAC,IAAI,CAAC,CA6Bf"}

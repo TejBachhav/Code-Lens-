@@ -1,0 +1,1 @@
+{"version":3,"file":"pythonPrefixResolver.d.ts","sourceRoot":"","sources":["../../../src/plugins/shared/pythonPrefixResolver.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AAIH,OAAO,MAAM,MAAM,iBAAiB,CAAC;AAuBrC;;;GAGG;AACH,wBAAsB,qBAAqB,CACzC,KAAK,EAAE,MAAM,EAAE,EACf,aAAa,EAAE,MAAM,EACrB,MAAM,EAAE,MAAM,GACb,OAAO,CAAC,GAAG,CAAC,MAAM,EAAE,GAAG,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC,CAAC,CAoQ3C"}

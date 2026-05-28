@@ -1,0 +1,689 @@
+[
+  {
+    "id": "d70b254a6b7a6c76",
+    "method": "POST",
+    "path": "/UserService/createUser",
+    "handler": {
+      "name": "createUser",
+      "modulePath": "src/main/resources/wsdl/UserService.wsdl",
+      "isAsync": false
+    },
+    "params": [],
+    "requestBody": {
+      "contentType": "application/soap+xml",
+      "schema": {
+        "type": "object",
+        "description": "__UNRESOLVED__: WSDL input message: tns:CreateUserRequest"
+      },
+      "required": true,
+      "typeName": "CreateUserRequest"
+    },
+    "middleware": [],
+    "decorators": [
+      {
+        "name": "wsdl:operation",
+        "arguments": [
+          "createUser"
+        ]
+      }
+    ],
+    "framework": "wsdl",
+    "language": "xml",
+    "sourceFile": "src/main/resources/wsdl/UserService.wsdl",
+    "sourceLines": [
+      1,
+      1
+    ],
+    "responseSchemas": [
+      {
+        "statusCode": 200,
+        "contentType": "application/soap+xml",
+        "schema": {
+          "type": "object",
+          "description": "__UNRESOLVED__: WSDL output message: tns:CreateUserResponse"
+        }
+      }
+    ],
+    "summary": "Creates a new user",
+    "description": "This endpoint allows the creation of a new user by providing necessary details in the request body. It returns a response indicating the success or failure of the operation.",
+    "curlExample": "curl -X POST /UserService/createUser -H \"Content-Type: application/soap+xml\" -d '<CreateUserRequest><username>newuser</username><password>pass123</password></CreateUserRequest>'",
+    "tags": [
+      "users",
+      "CRUD"
+    ],
+    "testCases": [
+      {
+        "name": "should return 200 for valid request",
+        "description": "Verifies that the API returns a 200 status code when provided with a valid CreateUserRequest.",
+        "method": "POST",
+        "path": "/UserService/createUser",
+        "expectedStatus": 200,
+        "assertions": [
+          "Response status code is 200",
+          "Response body contains a CreateUserResponse object"
+        ],
+        "headers": {
+          "Content-Type": "application/soap+xml"
+        },
+        "body": {
+          "CreateUserRequest": {
+            "username": "testuser",
+            "email": "test@example.com",
+            "password": "securepassword123"
+          }
+        }
+      },
+      {
+        "name": "should return 400 for missing username",
+        "description": "Verifies that the API returns a 400 status code when provided with a request missing the username field.",
+        "method": "POST",
+        "path": "/UserService/createUser",
+        "expectedStatus": 400,
+        "assertions": [
+          "Response status code is 400",
+          "Response body contains an error message indicating missing username"
+        ],
+        "headers": {
+          "Content-Type": "application/soap+xml"
+        },
+        "body": {
+          "CreateUserRequest": {
+            "email": "test@example.com",
+            "password": "securepassword123"
+          }
+        }
+      },
+      {
+        "name": "should return 400 for invalid email format",
+        "description": "Verifies that the API returns a 400 status code when provided with a request containing an invalid email format.",
+        "method": "POST",
+        "path": "/UserService/createUser",
+        "expectedStatus": 400,
+        "assertions": [
+          "Response status code is 400",
+          "Response body contains an error message indicating invalid email format"
+        ],
+        "headers": {
+          "Content-Type": "application/soap+xml"
+        },
+        "body": {
+          "CreateUserRequest": {
+            "username": "testuser",
+            "email": "invalid-email",
+            "password": "securepassword123"
+          }
+        }
+      },
+      {
+        "name": "should return 401 for missing authentication",
+        "description": "Verifies that the API returns a 401 status code when provided with a request missing authentication credentials.",
+        "method": "POST",
+        "path": "/UserService/createUser",
+        "expectedStatus": 401,
+        "assertions": [
+          "Response status code is 401",
+          "Response body contains an error message indicating missing authentication"
+        ],
+        "headers": {},
+        "body": {
+          "CreateUserRequest": {
+            "username": "testuser",
+            "email": "test@example.com",
+            "password": "securepassword123"
+          }
+        }
+      },
+      {
+        "name": "should return 500 for internal server error",
+        "description": "Verifies that the API returns a 500 status code when provided with a request that causes an internal server error.",
+        "method": "POST",
+        "path": "/UserService/createUser",
+        "expectedStatus": 500,
+        "assertions": [
+          "Response status code is 500",
+          "Response body contains an error message indicating internal server error"
+        ],
+        "headers": {
+          "Content-Type": "application/soap+xml"
+        },
+        "body": {
+          "CreateUserRequest": {
+            "username": "testuser",
+            "email": "test@example.com",
+            "password": "securepassword123"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "0d27a28161d4c1ba",
+    "method": "POST",
+    "path": "/UserService/getUser",
+    "handler": {
+      "name": "getUser",
+      "modulePath": "src/main/resources/wsdl/UserService.wsdl",
+      "isAsync": false
+    },
+    "params": [],
+    "requestBody": {
+      "contentType": "application/soap+xml",
+      "schema": {
+        "type": "object",
+        "description": "__UNRESOLVED__: WSDL input message: tns:GetUserRequest"
+      },
+      "required": true,
+      "typeName": "GetUserRequest"
+    },
+    "middleware": [],
+    "decorators": [
+      {
+        "name": "wsdl:operation",
+        "arguments": [
+          "getUser"
+        ]
+      }
+    ],
+    "framework": "wsdl",
+    "language": "xml",
+    "sourceFile": "src/main/resources/wsdl/UserService.wsdl",
+    "sourceLines": [
+      1,
+      1
+    ],
+    "responseSchemas": [
+      {
+        "statusCode": 200,
+        "contentType": "application/soap+xml",
+        "schema": {
+          "type": "object",
+          "description": "__UNRESOLVED__: WSDL output message: tns:GetUserResponse"
+        }
+      }
+    ],
+    "summary": "Retrieve user details",
+    "description": "This endpoint retrieves detailed information about a specific user. It accepts a SOAP request with the GetUserRequest schema and returns a SOAP response with the GetUserResponse schema.",
+    "curlExample": "curl -X POST https://example.com/UserService/getUser -H \"Content-Type: application/soap+xml\" -d '<GetUserRequest xmlns=\"http://example.com\"><UserID>123</UserID></GetUserRequest>'",
+    "tags": [
+      "users",
+      "CRUD"
+    ],
+    "testCases": [
+      {
+        "name": "should return 200 for valid request",
+        "description": "Verifies that the API returns a 200 status code and a valid response for a valid request.",
+        "method": "POST",
+        "path": "/UserService/getUser",
+        "expectedStatus": 200,
+        "assertions": [
+          "Response status code is 200",
+          "Response body contains user information"
+        ],
+        "headers": {
+          "Content-Type": "application/soap+xml"
+        },
+        "body": {
+          "GetUserRequest": {
+            "userId": "12345"
+          }
+        }
+      },
+      {
+        "name": "should return 400 for missing userId",
+        "description": "Verifies that the API returns a 400 status code and an error message when the required 'userId' parameter is missing.",
+        "method": "POST",
+        "path": "/UserService/getUser",
+        "expectedStatus": 400,
+        "assertions": [
+          "Response status code is 400",
+          "Response body contains an error message indicating missing 'userId'"
+        ],
+        "headers": {
+          "Content-Type": "application/soap+xml"
+        },
+        "body": {
+          "GetUserRequest": {}
+        }
+      },
+      {
+        "name": "should return 401 for missing auth",
+        "description": "Verifies that the API returns a 401 status code and an error message when authentication is required but not provided.",
+        "method": "POST",
+        "path": "/UserService/getUser",
+        "expectedStatus": 401,
+        "assertions": [
+          "Response status code is 401",
+          "Response body contains an error message indicating missing authentication"
+        ],
+        "headers": {
+          "Content-Type": "application/soap+xml"
+        },
+        "body": {
+          "GetUserRequest": {
+            "userId": "12345"
+          }
+        }
+      },
+      {
+        "name": "should return 404 for non-existent user",
+        "description": "Verifies that the API returns a 404 status code and an error message when the requested user does not exist.",
+        "method": "POST",
+        "path": "/UserService/getUser",
+        "expectedStatus": 404,
+        "assertions": [
+          "Response status code is 404",
+          "Response body contains an error message indicating the user does not exist"
+        ],
+        "headers": {
+          "Content-Type": "application/soap+xml"
+        },
+        "body": {
+          "GetUserRequest": {
+            "userId": "99999"
+          }
+        }
+      },
+      {
+        "name": "should return 500 for internal server error",
+        "description": "Verifies that the API returns a 500 status code and an error message when an unexpected error occurs on the server.",
+        "method": "POST",
+        "path": "/UserService/getUser",
+        "expectedStatus": 500,
+        "assertions": [
+          "Response status code is 500",
+          "Response body contains an error message indicating an internal server error"
+        ],
+        "headers": {
+          "Content-Type": "application/soap+xml"
+        },
+        "body": {
+          "GetUserRequest": {
+            "userId": "12345"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "eeafb7beb3a0da93",
+    "method": "GET",
+    "path": "/api/users/{wildcard}",
+    "handler": {
+      "name": "UserController",
+      "className": "com.example.controller.UserController",
+      "modulePath": "src/main/webapp/WEB-INF/web.xml",
+      "isAsync": false
+    },
+    "params": [
+      {
+        "name": "wildcard",
+        "in": "path",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "middleware": [],
+    "decorators": [
+      {
+        "name": "servlet-mapping",
+        "arguments": [
+          "UserServlet",
+          "/api/users/*"
+        ]
+      }
+    ],
+    "framework": "servlet",
+    "language": "xml",
+    "sourceFile": "src/main/webapp/WEB-INF/web.xml",
+    "sourceLines": [
+      1,
+      1
+    ],
+    "responseSchemas": [
+      {
+        "statusCode": 200,
+        "contentType": "text/html",
+        "schema": {
+          "type": "object",
+          "description": "__UNRESOLVED__: Servlet response type not determinable from web.xml"
+        }
+      }
+    ],
+    "summary": "Retrieve user details",
+    "description": "This endpoint retrieves detailed information about a specific user based on the provided wildcard in the path. The response is returned as HTML.",
+    "curlExample": "curl -X GET 'http://example.com/api/users/123'",
+    "tags": [
+      "users",
+      "CRUD"
+    ],
+    "testCases": [
+      {
+        "name": "should return 200 for valid request",
+        "description": "Verifies that the API returns a 200 status code for a valid request with a wildcard parameter.",
+        "method": "GET",
+        "path": "/api/users/123",
+        "expectedStatus": 200,
+        "assertions": []
+      },
+      {
+        "name": "should return 400 for missing wildcard parameter",
+        "description": "Verifies that the API returns a 400 status code when the required wildcard parameter is missing.",
+        "method": "GET",
+        "path": "/api/users/",
+        "expectedStatus": 400,
+        "assertions": []
+      },
+      {
+        "name": "should return 401 for missing authentication",
+        "description": "Verifies that the API returns a 401 status code when authentication is required but not provided.",
+        "method": "GET",
+        "path": "/api/users/123",
+        "expectedStatus": 401,
+        "assertions": []
+      },
+      {
+        "name": "should return 404 for non-existent user",
+        "description": "Verifies that the API returns a 404 status code when the requested user does not exist.",
+        "method": "GET",
+        "path": "/api/users/999",
+        "expectedStatus": 404,
+        "assertions": []
+      },
+      {
+        "name": "should return 500 for internal server error",
+        "description": "Verifies that the API returns a 500 status code when an unexpected error occurs on the server.",
+        "method": "GET",
+        "path": "/api/users/123",
+        "expectedStatus": 500,
+        "assertions": []
+      }
+    ]
+  },
+  {
+    "id": "0e21529ec716e1fa",
+    "method": "GET",
+    "path": "/api/orders/{wildcard}",
+    "handler": {
+      "name": "OrderController",
+      "className": "com.example.controller.OrderController",
+      "modulePath": "src/main/webapp/WEB-INF/web.xml",
+      "isAsync": false
+    },
+    "params": [
+      {
+        "name": "wildcard",
+        "in": "path",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "middleware": [],
+    "decorators": [
+      {
+        "name": "servlet-mapping",
+        "arguments": [
+          "OrderServlet",
+          "/api/orders/*"
+        ]
+      }
+    ],
+    "framework": "servlet",
+    "language": "xml",
+    "sourceFile": "src/main/webapp/WEB-INF/web.xml",
+    "sourceLines": [
+      1,
+      1
+    ],
+    "responseSchemas": [
+      {
+        "statusCode": 200,
+        "contentType": "text/html",
+        "schema": {
+          "type": "object",
+          "description": "__UNRESOLVED__: Servlet response type not determinable from web.xml"
+        }
+      }
+    ],
+    "summary": "Retrieve order details",
+    "description": "This endpoint retrieves detailed information about an order based on the provided wildcard parameter. It returns a text/html response containing the order data.",
+    "curlExample": "curl -X GET 'http://example.com/api/orders/123'",
+    "tags": [
+      "orders",
+      "CRUD"
+    ],
+    "testCases": [
+      {
+        "name": "should return 200 for valid request",
+        "description": "Verifies that the API returns a 200 status code when provided with a valid wildcard parameter.",
+        "method": "GET",
+        "path": "/api/orders/12345",
+        "expectedStatus": 200,
+        "assertions": []
+      },
+      {
+        "name": "should return 400 for missing wildcard parameter",
+        "description": "Verifies that the API returns a 400 status code when no wildcard parameter is provided.",
+        "method": "GET",
+        "path": "/api/orders/",
+        "expectedStatus": 400,
+        "assertions": []
+      },
+      {
+        "name": "should return 401 for missing authentication",
+        "description": "Verifies that the API returns a 401 status code when no authentication is provided.",
+        "method": "GET",
+        "path": "/api/orders/12345",
+        "expectedStatus": 401,
+        "assertions": []
+      },
+      {
+        "name": "should return 404 for non-existent order",
+        "description": "Verifies that the API returns a 404 status code when the requested order does not exist.",
+        "method": "GET",
+        "path": "/api/orders/99999",
+        "expectedStatus": 404,
+        "assertions": []
+      },
+      {
+        "name": "should return 500 for internal server error",
+        "description": "Verifies that the API returns a 500 status code when an unexpected error occurs.",
+        "method": "GET",
+        "path": "/api/orders/12345",
+        "expectedStatus": 500,
+        "assertions": []
+      }
+    ]
+  },
+  {
+    "id": "f2b5206845df0033",
+    "method": "GET",
+    "path": "/authController",
+    "handler": {
+      "name": "AuthController",
+      "className": "com.example.controller.AuthController",
+      "modulePath": "src/main/resources/applicationContext.xml",
+      "isAsync": false
+    },
+    "params": [],
+    "middleware": [],
+    "decorators": [
+      {
+        "name": "spring:bean",
+        "arguments": [
+          "com.example.controller.AuthController"
+        ]
+      }
+    ],
+    "framework": "spring-xml",
+    "language": "xml",
+    "sourceFile": "src/main/resources/applicationContext.xml",
+    "sourceLines": [
+      1,
+      1
+    ],
+    "summary": "unknown",
+    "description": "unknown",
+    "curlExample": "unknown",
+    "tags": [
+      "unknown"
+    ],
+    "testCases": [
+      {
+        "name": "should return 200 for valid request",
+        "description": "Verifies that the endpoint returns a 200 status code when provided with valid authentication credentials.",
+        "method": "GET",
+        "path": "/authController?username=testuser&password=testpass",
+        "expectedStatus": 200,
+        "assertions": [
+          "Response status code should be 200",
+          "Response body should contain valid authentication token"
+        ],
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      {
+        "name": "should return 401 for missing username",
+        "description": "Verifies that the endpoint returns a 401 status code when provided with a request missing the username parameter.",
+        "method": "GET",
+        "path": "/authController?password=testpass",
+        "expectedStatus": 401,
+        "assertions": [
+          "Response status code should be 401",
+          "Response body should contain error message indicating missing username"
+        ],
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      {
+        "name": "should return 401 for missing password",
+        "description": "Verifies that the endpoint returns a 401 status code when provided with a request missing the password parameter.",
+        "method": "GET",
+        "path": "/authController?username=testuser",
+        "expectedStatus": 401,
+        "assertions": [
+          "Response status code should be 401",
+          "Response body should contain error message indicating missing password"
+        ],
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      {
+        "name": "should return 401 for invalid credentials",
+        "description": "Verifies that the endpoint returns a 401 status code when provided with invalid authentication credentials.",
+        "method": "GET",
+        "path": "/authController?username=testuser&password=wrongpass",
+        "expectedStatus": 401,
+        "assertions": [
+          "Response status code should be 401",
+          "Response body should contain error message indicating invalid credentials"
+        ],
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    ]
+  },
+  {
+    "id": "022cc93558477473",
+    "method": "GET",
+    "path": "/paymentHandler",
+    "handler": {
+      "name": "PaymentHandler",
+      "className": "com.example.handler.PaymentHandler",
+      "modulePath": "src/main/resources/applicationContext.xml",
+      "isAsync": false
+    },
+    "params": [],
+    "middleware": [],
+    "decorators": [
+      {
+        "name": "spring:bean",
+        "arguments": [
+          "com.example.handler.PaymentHandler"
+        ]
+      }
+    ],
+    "framework": "spring-xml",
+    "language": "xml",
+    "sourceFile": "src/main/resources/applicationContext.xml",
+    "sourceLines": [
+      1,
+      1
+    ],
+    "summary": "unknown",
+    "description": "unknown",
+    "curlExample": "unknown",
+    "testCases": [
+      {
+        "name": "should return 200 for valid request",
+        "description": "Verifies that the endpoint returns a 200 status code when provided with a valid request.",
+        "method": "GET",
+        "path": "/paymentHandler?amount=100&currency=USD",
+        "expectedStatus": 200,
+        "assertions": [
+          "Response status code is 200",
+          "Response body contains expected payment details"
+        ],
+        "headers": {
+          "Authorization": "Bearer valid_token"
+        }
+      },
+      {
+        "name": "should return 401 for missing auth",
+        "description": "Verifies that the endpoint returns a 401 status code when no authorization header is provided.",
+        "method": "GET",
+        "path": "/paymentHandler?amount=100&currency=USD",
+        "expectedStatus": 401,
+        "assertions": [
+          "Response status code is 401",
+          "Response body contains 'Unauthorized' message"
+        ]
+      },
+      {
+        "name": "should return 400 for invalid amount",
+        "description": "Verifies that the endpoint returns a 400 status code when an invalid amount is provided.",
+        "method": "GET",
+        "path": "/paymentHandler?amount=-1&currency=USD",
+        "expectedStatus": 400,
+        "assertions": [
+          "Response status code is 400",
+          "Response body contains 'Invalid amount' message"
+        ],
+        "headers": {
+          "Authorization": "Bearer valid_token"
+        }
+      },
+      {
+        "name": "should return 400 for missing currency",
+        "description": "Verifies that the endpoint returns a 400 status code when no currency is provided.",
+        "method": "GET",
+        "path": "/paymentHandler?amount=100&currency=",
+        "expectedStatus": 400,
+        "assertions": [
+          "Response status code is 400",
+          "Response body contains 'Currency is required' message"
+        ],
+        "headers": {
+          "Authorization": "Bearer valid_token"
+        }
+      },
+      {
+        "name": "should return 500 for internal server error",
+        "description": "Verifies that the endpoint returns a 500 status code when an unexpected error occurs.",
+        "method": "GET",
+        "path": "/paymentHandler?amount=100&currency=USD",
+        "expectedStatus": 500,
+        "assertions": [
+          "Response status code is 500",
+          "Response body contains 'Internal server error' message"
+        ],
+        "headers": {
+          "Authorization": "Bearer valid_token"
+        }
+      }
+    ]
+  }
+]
