@@ -1,7 +1,6 @@
 .vscode-test/**
 src/**
 grammars/**
-node_modules/**
 .gitignore
 .eslintrc.json
 webpack.config.js

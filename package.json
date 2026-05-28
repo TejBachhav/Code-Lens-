@@ -2,8 +2,12 @@
   "name": "codelens-api-docs",
   "displayName": "CodeLens — API Documentation Generator",
   "description": "Offline-first VS Code extension that scans your codebase and generates API documentation, architecture docs, and runnable test suites using local LLM inference.",
-  "version": "0.1.0",
-  "publisher": "codelens",
+  "version": "0.1.1",
+  "publisher": "CodeLens",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TejBachhav/Code-Lens-.git"
+  },
   "license": "MIT",
   "engines": {
     "vscode": "^1.85.0"
@@ -23,7 +27,6 @@
     "llm"
   ],
   "activationEvents": [
-    "onCommand:codelens.scanWorkspace",
     "workspaceContains:**/*.py",
     "workspaceContains:**/*.ts",
     "workspaceContains:**/*.js",
